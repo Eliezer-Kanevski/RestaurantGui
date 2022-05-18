@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="master" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-1EMARCD\SQLEXPRESS;Initial Catalog=master;Integrated Security=True" SettingsObjectName="RestarauntGui.Properties.Settings" SettingsPropertyName="masterConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.PERSON" Member="PERSONs">
+    <Type Name="PERSON">
+      <Column Name="PERSON_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FNAME" Type="System.String" DbType="VarChar(45) NOT NULL" CanBeNull="false" />
+      <Column Name="LNAME" Type="System.String" DbType="VarChar(45) NOT NULL" CanBeNull="false" />
+      <Column Name="PHONE" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="CREATED_AT" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="UPDATED_AT" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="DOB" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="EMAIL" Type="System.String" DbType="VarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="IS_EMPLOYEE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IS_CUSTOMER" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="PERSON_EMPLOYEE" Member="EMPLOYEEs" ThisKey="PERSON_ID" OtherKey="PERSON_ID" Type="EMPLOYEE" />
+      <Association Name="PERSON_CUSTOMER" Member="CUSTOMERs" ThisKey="PERSON_ID" OtherKey="PERSON_ID" Type="CUSTOMER" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EMPLOYEE" Member="EMPLOYEEs">
+    <Type Name="EMPLOYEE">
+      <Column Name="EMP_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PERSON_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EMP_HIRE_DATE" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="EMP_EMAIL" Type="System.String" DbType="VarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="EMP_STARTING_SALARY" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="EMP_CURRENT_SALARY" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="EMP_TITLE" Type="System.String" DbType="VarChar(45) NOT NULL" CanBeNull="false" />
+      <Association Name="PERSON_EMPLOYEE" Member="PERSON" ThisKey="PERSON_ID" OtherKey="PERSON_ID" Type="PERSON" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CUSTOMER" Member="CUSTOMERs">
+    <Type Name="CUSTOMER">
+      <Column Name="CUST_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PERSON_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CUST_CREATED_AT" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="CUST_UPDATED_AT" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="CUST_USERNAME" Type="System.String" DbType="VarChar(45) NOT NULL" CanBeNull="false" />
+      <Column Name="CUST_PASSWORD" Type="System.String" DbType="VarChar(45) NOT NULL" CanBeNull="false" />
+      <Column Name="CUST_BALANCE" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Association Name="CUSTOMER_ADDRESS1" Member="ADDRESS1s" ThisKey="CUST_ID" OtherKey="CUST_ID" Type="ADDRESS1" />
+      <Association Name="CUSTOMER_PAYMENT" Member="PAYMENTs" ThisKey="CUST_ID" OtherKey="CUST_ID" Type="PAYMENT" />
+      <Association Name="CUSTOMER_CUSTOMER_HAS_ORDER" Member="CUSTOMER_HAS_ORDERs" ThisKey="CUST_ID" OtherKey="CUST_ID" Type="CUSTOMER_HAS_ORDER" />
+      <Association Name="PERSON_CUSTOMER" Member="PERSON" ThisKey="PERSON_ID" OtherKey="PERSON_ID" Type="PERSON" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ADDRESS" Member="ADDRESS1s">
+    <Type Name="ADDRESS1">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CUST_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ADDRESS" Type="System.String" DbType="VarChar(45) NOT NULL" CanBeNull="false" />
+      <Column Name="CITY" Type="System.String" DbType="VarChar(45) NOT NULL" CanBeNull="false" />
+      <Column Name="STATE" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="COUNTRY" Type="System.String" DbType="VarChar(45) NOT NULL" CanBeNull="false" />
+      <Column Name="PHONE" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="CUSTOMER_ADDRESS1" Member="CUSTOMER" ThisKey="CUST_ID" OtherKey="CUST_ID" Type="CUSTOMER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PAYMENT" Member="PAYMENTs">
+    <Type Name="PAYMENT">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CUST_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TYPE" Type="System.String" DbType="VarChar(45) NOT NULL" CanBeNull="false" />
+      <Column Name="PROVIDER" Type="System.String" DbType="VarChar(45) NOT NULL" CanBeNull="false" />
+      <Column Name="CARD_NUMBER" Type="System.String" DbType="VarChar(16) NOT NULL" CanBeNull="false" />
+      <Column Name="EXPIRE_DATE" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="CUSTOMER_PAYMENT" Member="CUSTOMER" ThisKey="CUST_ID" OtherKey="CUST_ID" Type="CUSTOMER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MENU" Member="MENUs">
+    <Type Name="MENU">
+      <Column Name="M_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="M_NAME" Type="System.String" DbType="VarChar(35) NOT NULL" CanBeNull="false" />
+      <Column Name="M_DESCRIPTION" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="M_CREATED_AT" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="M_UPDATED_AT" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="MENU_MENU_HAS_ITEM" Member="MENU_HAS_ITEMs" ThisKey="M_ID" OtherKey="MENU_ID" Type="MENU_HAS_ITEM" />
+      <Association Name="MENU_ORDER_HAS_ITEM" Member="ORDER_HAS_ITEMs" ThisKey="M_ID" OtherKey="M_ID" Type="ORDER_HAS_ITEM" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ITEM" Member="ITEMs">
+    <Type Name="ITEM">
+      <Column Name="ITEM_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="I_NAME" Type="System.String" DbType="VarChar(35) NOT NULL" CanBeNull="false" />
+      <Column Name="I_DESCRIPTION" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="I_PRICE" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="I_COST" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="I_QUANTITY" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ITEM_ITEM_HAS_INGREDIENT" Member="ITEM_HAS_INGREDIENTs" ThisKey="ITEM_ID" OtherKey="ITEM_ID" Type="ITEM_HAS_INGREDIENT" />
+      <Association Name="ITEM_MENU_HAS_ITEM" Member="MENU_HAS_ITEMs" ThisKey="ITEM_ID" OtherKey="ITEM_ID" Type="MENU_HAS_ITEM" />
+      <Association Name="ITEM_ORDER_HAS_ITEM" Member="ORDER_HAS_ITEMs" ThisKey="ITEM_ID" OtherKey="ITEM_ID" Type="ORDER_HAS_ITEM" />
+    </Type>
+  </Table>
+  <Table Name="dbo.INGREDIENTS" Member="INGREDIENTs">
+    <Type Name="INGREDIENT">
+      <Column Name="INGRED_ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="INGRED_NAME" Type="System.String" DbType="VarChar(45) NOT NULL" CanBeNull="false" />
+      <Column Name="INGRED_COST" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="INGRED_SIZE" Type="System.String" DbType="VarChar(45)" CanBeNull="true" />
+      <Association Name="INGREDIENT_ITEM_HAS_INGREDIENT" Member="ITEM_HAS_INGREDIENTs" ThisKey="INGRED_ID" OtherKey="INGRED_ID" Type="ITEM_HAS_INGREDIENT" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ITEM_HAS_INGREDIENTS" Member="ITEM_HAS_INGREDIENTs">
+    <Type Name="ITEM_HAS_INGREDIENT">
+      <Column Name="P_CODE" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ITEM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="INGRED_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="INGREDIENT_ITEM_HAS_INGREDIENT" Member="INGREDIENT" ThisKey="INGRED_ID" OtherKey="INGRED_ID" Type="INGREDIENT" IsForeignKey="true" />
+      <Association Name="ITEM_ITEM_HAS_INGREDIENT" Member="ITEM" ThisKey="ITEM_ID" OtherKey="ITEM_ID" Type="ITEM" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MENU_HAS_ITEM" Member="MENU_HAS_ITEMs">
+    <Type Name="MENU_HAS_ITEM">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MENU_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ITEM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ACTIVE" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="ITEM_MENU_HAS_ITEM" Member="ITEM" ThisKey="ITEM_ID" OtherKey="ITEM_ID" Type="ITEM" IsForeignKey="true" />
+      <Association Name="MENU_MENU_HAS_ITEM" Member="MENU" ThisKey="MENU_ID" OtherKey="M_ID" Type="MENU" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ORDERS" Member="ORDERs">
+    <Type Name="ORDER">
+      <Column Name="NUMBER" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DATE" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="ORDER_STATUS" Type="System.String" DbType="VarChar(13) NOT NULL" CanBeNull="false" />
+      <Column Name="PAYMENT_STATUS" Type="System.String" DbType="VarChar(13) NOT NULL" CanBeNull="false" />
+      <Column Name="TOTAL" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="ORDER_ORDER_HAS_ITEM" Member="ORDER_HAS_ITEMs" ThisKey="NUMBER" OtherKey="NUMBER" Type="ORDER_HAS_ITEM" />
+      <Association Name="ORDER_CUSTOMER_HAS_ORDER" Member="CUSTOMER_HAS_ORDERs" ThisKey="NUMBER" OtherKey="NUMBER" Type="CUSTOMER_HAS_ORDER" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ORDER_HAS_ITEMS" Member="ORDER_HAS_ITEMs">
+    <Type Name="ORDER_HAS_ITEM">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NUMBER" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="M_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ITEM_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="QUANTITY" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="MENU_ORDER_HAS_ITEM" Member="MENU" ThisKey="M_ID" OtherKey="M_ID" Type="MENU" IsForeignKey="true" />
+      <Association Name="ITEM_ORDER_HAS_ITEM" Member="ITEM" ThisKey="ITEM_ID" OtherKey="ITEM_ID" Type="ITEM" IsForeignKey="true" />
+      <Association Name="ORDER_ORDER_HAS_ITEM" Member="ORDER" ThisKey="NUMBER" OtherKey="NUMBER" Type="ORDER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CUSTOMER_HAS_ORDERS" Member="CUSTOMER_HAS_ORDERs">
+    <Type Name="CUSTOMER_HAS_ORDER">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CUST_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NUMBER" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="CUSTOMER_CUSTOMER_HAS_ORDER" Member="CUSTOMER" ThisKey="CUST_ID" OtherKey="CUST_ID" Type="CUSTOMER" IsForeignKey="true" />
+      <Association Name="ORDER_CUSTOMER_HAS_ORDER" Member="ORDER" ThisKey="NUMBER" OtherKey="NUMBER" Type="ORDER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.YEARLY_REVENUE" Method="YEARLY_REVENUE" IsComposable="true">
+    <Parameter Name="YEAR" Parameter="yEAR" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Decimal" />
+  </Function>
+  <Function Name="dbo.DELETE_ORDER" Method="DELETE_ORDER">
+    <Parameter Name="ORDER_NUMBER" Parameter="oRDER_NUMBER" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GiftGoodCustomers" Method="GiftGoodCustomers">
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.RAISE_ITEM_PRICES" Method="RAISE_ITEM_PRICES">
+    <Parameter Name="SMALL_RAISE" Parameter="sMALL_RAISE" Type="System.Double" DbType="Float" />
+    <Parameter Name="LARGE_RAISE" Parameter="lARGE_RAISE" Type="System.Double" DbType="Float" />
+    <Parameter Name="PRICE_FOR_SMALL_ITEMS" Parameter="pRICE_FOR_SMALL_ITEMS" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SelectSortedOrders" Method="SelectSortedOrders">
+    <Parameter Name="PaymentStatus" Parameter="paymentStatus" Type="System.String" DbType="VarChar(13)" />
+    <ElementType Name="SelectSortedOrdersResult">
+      <Column Name="NUMBER" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DATE" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="ORDER_STATUS" Type="System.String" DbType="VarChar(13) NOT NULL" CanBeNull="false" />
+      <Column Name="PAYMENT_STATUS" Type="System.String" DbType="VarChar(13) NOT NULL" CanBeNull="false" />
+      <Column Name="TOTAL" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.UPDATE_ORDER_TOTAL" Method="UPDATE_ORDER_TOTAL">
+    <Parameter Name="ORDER_ID" Parameter="oRDER_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ORIGINAL_TOTAL" Parameter="oRIGINAL_TOTAL" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Parameter Name="NEW_TOTAL" Parameter="nEW_TOTAL" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>
