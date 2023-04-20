@@ -14,9 +14,14 @@ namespace RestarauntGui
         [STAThread]
         static void Main()
         {
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+            using (var db = new DataClasses1DataContext())
+            {
+            }
+            
         }
     }
 }
