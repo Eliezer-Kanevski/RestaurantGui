@@ -16,19 +16,6 @@ namespace RestarauntGui
         {
             return db.ITEMs.ToList();
         }
-        /*
-        public static String[] getItemsAsStringList()
-        {
-            string[] arr = new string[100];
-            var items = db.ITEMs.ToList();
-            int count = 0;
-            foreach(var item in items)
-            {
-                arr[count] = { item.ITEM_ID, item.I_NAME };
-                list.Add(arr);
-                count++
-            }
-        }*/
 
         public static List<int> getItemId()
         {
@@ -77,7 +64,5 @@ namespace RestarauntGui
             }
             return total;
         }
-
-
     }
 }
